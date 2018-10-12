@@ -2,7 +2,8 @@
 
 <module name="cv_active_random_filter" dir="computer_vision/">
   <doc>
-    <description>Active random sampling colour filter</description>
+    <description>Active random sampling colour filter.
+Currently tuned to find and track pink balls, and keep the tracking going even if colors change a bit over time.</description>
   </doc>
   <settings>
   <dl_settings>
