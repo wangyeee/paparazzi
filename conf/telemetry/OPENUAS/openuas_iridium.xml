@@ -18,7 +18,7 @@
       <message name="SURVEY"         period="8."	phase="5"/>
 
       <message name="ALIVE"          period="16."	phase="1"/>
-      <message name="BAT"            period="16."	phase="1"/>
+      <message name="ENERGY"         period="16."	phase="1"/>
       <message name="CALIBRATION"    period="16."	phase="1"/>
       <message name="DATALINK_REPORT"       period="16."	phase="5"/>
       <message name="GPS_SOL"        period="16."	phase="5"/>
