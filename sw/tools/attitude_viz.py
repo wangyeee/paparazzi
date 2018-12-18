@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python2
 
 # Tool for visualizing quaternion as rotated cube
 

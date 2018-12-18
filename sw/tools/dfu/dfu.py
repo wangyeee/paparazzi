@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 #
 # dfu.py: Access USB DFU class devices
 # Copyright (C) 2009  Black Sphere Technologies

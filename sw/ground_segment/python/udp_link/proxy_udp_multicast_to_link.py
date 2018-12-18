@@ -1,10 +1,12 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 
 import os
 import socket
 import struct
 import sys
 from optparse import OptionParser
+
+from __future__ import print_function
 
 sys.path.append(os.getenv("PAPARAZZI_HOME") + "/sw/lib/python")
 
@@ -39,6 +41,6 @@ while( 1 ):
       # send the command
       destsock.sendto( data, (options.dest_addr, options.dest_port) )
 
-    except socket.error, e:
-      print 'Exception', e
+    except socket.error as e:
+      print('Exception', e)
 

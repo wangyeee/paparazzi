@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 import struct
 
 with open('uart_log.bin', 'rb') as data:

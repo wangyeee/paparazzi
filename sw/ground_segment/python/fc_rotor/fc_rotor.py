@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 #
 # Copyright (C) 2017 Hector Garcia de Marina <hgdemarina@gmail.com>
 #                    Gautier Hattenberger <gautier.hattenberger@enac.fr>
@@ -29,6 +29,8 @@ import numpy as np
 import json
 from time import sleep
 from os import path, getenv
+from __future__ import print_function
+
 PPRZ_HOME = getenv("PAPARAZZI_HOME", path.normpath(path.join(path.dirname(path.abspath(__file__)), '../../../../')))
 sys.path.append(PPRZ_HOME + "/var/lib/python/")
 from pprzlink.ivy import IvyMessagesInterface
@@ -183,7 +185,7 @@ class FormationControl:
                     print("The state msg of rotorcraft ", rc.id, " stopped")
                     sys.stdout.flush()
                 ready = False
-            if rc.initialized and 'geo_fence' in self.config.keys():
+            if rc.initialized and 'geo_fence' in list(self.config.keys()):
                 geo_fence = self.config['geo_fence']
                 if not self.ignore_geo_fence:
                     if (rc.X[0] < geo_fence['x_min'] or rc.X[0] > geo_fence['x_max']
@@ -251,7 +253,7 @@ class FormationControl:
             #print "Positions: " + str(X).replace('[','').replace(']','')
             #print "Velocities: " + str(V).replace('[','').replace(']','')
             #print "Acceleration command: " + str(U).replace('[','').replace(']','')
-            print "Error distances: " + str(E).replace('[','').replace(']','')
+            print("Error distances: " + str(E).replace('[','').replace(']',''))
             sys.stdout.flush()
 
         i = 0
