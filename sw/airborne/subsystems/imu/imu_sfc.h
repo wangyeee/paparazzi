@@ -1,0 +1,56 @@
+#ifndef IMU_SFC_SPI_H
+#define IMU_SFC_SPI_H
+
+#include "std.h"
+#include "generated/airframe.h"
+#include "subsystems/imu.h"
+
+#include "peripherals/mpu60x0_spi.h"
+#include "peripherals/mag3110.h"
+
+#ifndef SFC_GYRO_RANGE
+#define SFC_GYRO_RANGE MPU60X0_GYRO_RANGE_2000
+#endif
+
+#ifndef SFC_ACCEL_RANGE
+#define SFC_ACCEL_RANGE MPU60X0_ACCEL_RANGE_16G
+#endif
+
+// Set default sensitivity based on range if needed
+#if !defined IMU_GYRO_P_SENS & !defined IMU_GYRO_Q_SENS & !defined IMU_GYRO_R_SENS
+#define IMU_GYRO_P_SENS MPU60X0_GYRO_SENS[SFC_GYRO_RANGE]
+#define IMU_GYRO_P_SENS_NUM MPU60X0_GYRO_SENS_FRAC[SFC_GYRO_RANGE][0]
+#define IMU_GYRO_P_SENS_DEN MPU60X0_GYRO_SENS_FRAC[SFC_GYRO_RANGE][1]
+#define IMU_GYRO_Q_SENS MPU60X0_GYRO_SENS[SFC_GYRO_RANGE]
+#define IMU_GYRO_Q_SENS_NUM MPU60X0_GYRO_SENS_FRAC[SFC_GYRO_RANGE][0]
+#define IMU_GYRO_Q_SENS_DEN MPU60X0_GYRO_SENS_FRAC[SFC_GYRO_RANGE][1]
+#define IMU_GYRO_R_SENS MPU60X0_GYRO_SENS[SFC_GYRO_RANGE]
+#define IMU_GYRO_R_SENS_NUM MPU60X0_GYRO_SENS_FRAC[SFC_GYRO_RANGE][0]
+#define IMU_GYRO_R_SENS_DEN MPU60X0_GYRO_SENS_FRAC[SFC_GYRO_RANGE][1]
+#endif
+
+// Set default sensitivity based on range if needed
+#if !defined IMU_ACCEL_X_SENS & !defined IMU_ACCEL_Y_SENS & !defined IMU_ACCEL_Z_SENS
+#define IMU_ACCEL_X_SENS MPU60X0_ACCEL_SENS[SFC_ACCEL_RANGE]
+#define IMU_ACCEL_X_SENS_NUM MPU60X0_ACCEL_SENS_FRAC[SFC_ACCEL_RANGE][0]
+#define IMU_ACCEL_X_SENS_DEN MPU60X0_ACCEL_SENS_FRAC[SFC_ACCEL_RANGE][1]
+#define IMU_ACCEL_Y_SENS MPU60X0_ACCEL_SENS[SFC_ACCEL_RANGE]
+#define IMU_ACCEL_Y_SENS_NUM MPU60X0_ACCEL_SENS_FRAC[SFC_ACCEL_RANGE][0]
+#define IMU_ACCEL_Y_SENS_DEN MPU60X0_ACCEL_SENS_FRAC[SFC_ACCEL_RANGE][1]
+#define IMU_ACCEL_Z_SENS MPU60X0_ACCEL_SENS[SFC_ACCEL_RANGE]
+#define IMU_ACCEL_Z_SENS_NUM MPU60X0_ACCEL_SENS_FRAC[SFC_ACCEL_RANGE][0]
+#define IMU_ACCEL_Z_SENS_DEN MPU60X0_ACCEL_SENS_FRAC[SFC_ACCEL_RANGE][1]
+#endif
+
+struct ImuSFC {
+  struct Mpu60x0_Spi mpu;
+  struct Mag3110 mag;
+};
+
+extern struct ImuSFC imu_sfc;
+
+extern void imu_sfc_init(void);
+extern void imu_sfc_event(void);
+extern void imu_sfc_periodic(void);
+
+#endif /* IMU_SFC_H */
