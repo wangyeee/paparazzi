@@ -220,7 +220,7 @@ void __early_init(void) {
 bool sdc_lld_is_card_inserted(SDCDriver *sdcp) {
 
   (void)sdcp;
-  return !palReadPad(GPIOB, GPIOB_SDIO_DETECT);
+  return !palReadPad(GPIOA, GPIOB_SDIO_DETECT);  // PA8
 }
 
 /**
@@ -238,10 +238,8 @@ bool sdc_lld_is_write_protected(SDCDriver *sdcp) {
  * @brief   MMC_SPI card detection.
  */
 bool mmc_lld_is_card_inserted(MMCDriver *mmcp) {
-
   (void)mmcp;
-  /* TODO: Fill the implementation.*/
-  return true;
+  return false;
 }
 
 /**
@@ -250,7 +248,6 @@ bool mmc_lld_is_card_inserted(MMCDriver *mmcp) {
 bool mmc_lld_is_write_protected(MMCDriver *mmcp) {
 
   (void)mmcp;
-  /* TODO: Fill the implementation.*/
   return false;
 }
 #endif

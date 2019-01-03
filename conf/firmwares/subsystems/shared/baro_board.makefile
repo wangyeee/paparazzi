@@ -304,6 +304,15 @@ else ifeq ($(BOARD), vms_ecu)
   BARO_BOARD_SRCS += peripherals/ms5611_spi.c
   BARO_BOARD_SRCS += boards/baro_board_ms5611_spi.c
 
+else ifeq ($(BOARD), simple_fc)
+  BARO_BOARD_CFLAGS += -DBARO_BOARD=BARO_MS5611_I2C
+  BARO_BOARD_CFLAGS += -DUSE_I2C1
+  BARO_BOARD_CFLAGS += -DBB_MS5611_I2C_DEV=i2c1
+  BARO_BOARD_CFLAGS += -DBB_MS5611_SLAVE_ADDR=MS5611_I2C_SLAVE_ADDR_ALT
+  BARO_BOARD_SRCS += peripherals/ms5611.c
+  BARO_BOARD_SRCS += peripherals/ms5611_i2c.c
+  BARO_BOARD_SRCS += boards/baro_board_ms5611_i2c.c
+
 endif # check board
 
 BARO_LED ?= none

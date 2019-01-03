@@ -75,6 +75,8 @@
 #define PIN_PUPDR_PULLDOWN(n)       (2U << ((n) * 2U))
 #define PIN_AFIO_AF(n, v)           ((v) << (((n) % 8U) * 4U))
 
+// TODO correct all mcu/gpio settings
+
 /*
  * Port A setup.
  *
@@ -1050,85 +1052,87 @@
                                      PIN_AFIO_AF(15, 0))
 
 
+
 /*
  * AHB_CLK
  */
 #define AHB_CLK STM32_HCLK
 
+// TODO other hardware conf
 
 /*
  * LEDs
  */
-/* 1 red, on PA8 */
+/* PB3 */
 #ifndef USE_LED_1
 #define USE_LED_1 1
 #endif
-#define LED_1_GPIO GPIOA
-#define LED_1_GPIO_PIN 8
+#define LED_1_GPIO GPIOB
+#define LED_1_GPIO_PIN GPIO3
 #define LED_1_GPIO_ON gpio_clear
 #define LED_1_GPIO_OFF gpio_set
+#define LED_1_AFIO_REMAP ((void)0)
 
-/* 2 green, shared with JTAG_TRST */
+/* PB4 */
 #ifndef USE_LED_2
 #define USE_LED_2 1
 #endif
 #define LED_2_GPIO GPIOB
-#define LED_2_GPIO_PIN 4
+#define LED_2_GPIO_PIN GPIO4
 #define LED_2_GPIO_ON gpio_clear
 #define LED_2_GPIO_OFF gpio_set
+#define LED_2_AFIO_REMAP ((void)0)
 
-/* 3 green, shared with ADC12 (ADC_6 on connector ANALOG2) */
+/* PB5 */
 #ifndef USE_LED_3
 #define USE_LED_3 1
 #endif
-#define LED_3_GPIO GPIOC
-#define LED_3_GPIO_PIN 2
+#define LED_3_GPIO GPIOB
+#define LED_3_GPIO_PIN GPIO5
 #define LED_3_GPIO_ON gpio_clear
 #define LED_3_GPIO_OFF gpio_set
+#define LED_3_AFIO_REMAP ((void)0)
 
-/* 4 red, shared with ADC15 (ADC_4 on connector ANALOG2) */
-#ifndef USE_LED_4
-#define USE_LED_4 1
+#ifdef USE_LED_4
+#undef USE_LED_4
+#warning "LED_4 not available on SimpleFC"
 #endif
-#define LED_4_GPIO GPIOC
-#define LED_4_GPIO_PIN 5
-#define LED_4_GPIO_ON gpio_clear
-#define LED_4_GPIO_OFF gpio_set
 
-/* 5 green, on PC15 */
-#ifndef USE_LED_5
-#define USE_LED_5 0
+#ifdef USE_LED_5
+#undef USE_LED_5
+#warning "LED_5 not available on SimpleFC"
 #endif
-#define LED_5_GPIO GPIOC
-#define LED_5_GPIO_PIN 15
-#define LED_5_GPIO_ON gpio_set
-#define LED_5_GPIO_OFF gpio_clear
 
 /*
  * ADCs
  */
 // AUX 1
+#ifndef USE_ADC_1
+// internal battery monitor
+#define USE_ADC_1 1
+#endif
+
 #if USE_ADC_1
-#define AD1_1_CHANNEL ADC_CHANNEL_IN13
+#define AD1_1_CHANNEL ADC_CHANNEL_IN10
 #define ADC_1 AD1_1
 #define ADC_1_GPIO_PORT GPIOC
-#define ADC_1_GPIO_PIN GPIO3
+#define ADC_1_GPIO_PIN GPIO0
 #endif
 
 // AUX 2
 #if USE_ADC_2
-#define AD1_2_CHANNEL ADC_CHANNEL_IN10
+#define AD1_2_CHANNEL ADC_CHANNEL_IN11
 #define ADC_2 AD1_2
 #define ADC_2_GPIO_PORT GPIOC
-#define ADC_2_GPIO_PIN GPIO0
+#define ADC_2_GPIO_PIN GPIO1
 #endif
 
 // AUX 3
 #if USE_ADC_3
-#define AD1_3_CHANNEL ADC_CHANNEL_IN11
+#define AD1_3_CHANNEL ADC_CHANNEL_IN12
 #define ADC_3 AD1_3
 #define ADC_3_GPIO_PORT GPIOC
-#define ADC_3_GPIO_PIN GPIO1
+#define ADC_3_GPIO_PIN GPIO2
 #endif
 
 // Internal ADC for battery enabled by default
@@ -1136,29 +1140,16 @@
 #define USE_ADC_4 1
 #endif
 #if USE_ADC_4
-#define AD1_4_CHANNEL ADC_CHANNEL_IN14
+#define AD1_4_CHANNEL ADC_CHANNEL_IN13
 #define ADC_4 AD1_4
 #define ADC_4_GPIO_PORT GPIOC
-#define ADC_4_GPIO_PIN GPIO4
+#define ADC_4_GPIO_PIN GPIO3
 #endif
-
-// Internal Temperature sensor enabled by default
-#ifndef USE_ADC_5
-#define USE_ADC_5 1
-#define USE_ADC_SENSOR 1
-#endif
-#if USE_ADC_5
-#define AD1_5_CHANNEL ADC_CHANNEL_SENSOR
-#define ADC_5 AD1_5
-#define ADC_5_GPIO_PORT GPIOC
-#define ADC_5_GPIO_PIN GPIO4
-#endif
-
 
 
 /* allow to define ADC_CHANNEL_VSUPPLY in the airframe file*/
 #ifndef ADC_CHANNEL_VSUPPLY
-#define ADC_CHANNEL_VSUPPLY ADC_4
+#define ADC_CHANNEL_VSUPPLY ADC_1
 #endif
 
 #define DefaultVoltageOfAdc(adc) (0.004489*adc)
@@ -1413,6 +1404,36 @@
 #define SPI2_GPIO_NSS GPIO12
 
 #define SPI3_GPIO_PORT_NSS GPIO
+
+
+// test
+/* UART */
+#define UART1_GPIO_AF GPIO_AF7
+#define UART1_GPIO_PORT_RX GPIOA
+#define UART1_GPIO_RX GPIO10
+#define UART1_GPIO_PORT_TX GPIOA
+#define UART1_GPIO_TX GPIO9
+
+#define UART2_GPIO_AF GPIO_AF7
+#define UART2_GPIO_PORT_RX GPIOA
+#define UART2_GPIO_RX GPIO3
+// TODO USART2 is rx only
+#define UART2_GPIO_PORT_TX GPIOA
+#define UART2_GPIO_TX GPIO2
+
+#define UART3_GPIO_AF GPIO_AF7
+#define UART3_GPIO_PORT_RX GPIOB
+#define UART3_GPIO_RX GPIO11
+#define UART3_GPIO_PORT_TX GPIOB
+#define UART3_GPIO_TX GPIO10
+
+#define UART4_GPIO_AF GPIO_AF8
+#define UART4_GPIO_PORT_RX GPIOA
+#define UART4_GPIO_RX GPIO1
+// TODO USART2 is rx only
+#define UART4_GPIO_PORT_TX GPIOA
+#define UART4_GPIO_TX GPIO0
+// end test
 
 /**
  * Baro
